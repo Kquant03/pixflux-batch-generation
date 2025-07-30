@@ -1,0 +1,20 @@
+soft lighting
+dramatic lighting
+rim lighting
+backlit
+golden hour
+blue hour
+neon lights
+candlelight
+moonlight
+sunlight
+studio lighting
+natural lighting
+harsh shadows
+diffused light
+volumetric lighting
+bioluminescent
+glowing
+radiant
+dim lighting
+bright lighting
