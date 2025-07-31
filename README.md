@@ -1,4 +1,7 @@
 # 🎨 PixelLab AI Batch Generator
+
+<img width="2560" height="1440" alt="Saber" src="https://github.com/user-attachments/assets/8239c3e1-54b8-488f-be21-611a014d15ef" />
+
 ## The Ultimate Pixel Art Generation Tool with Dynamic Prompts & Complete Transparency
 
 ### 🌟 What Is This?
@@ -211,6 +214,8 @@ Now you can:
 
 ## 🎯 Dynamic Prompting
 
+<img width="879" height="358" alt="image" src="https://github.com/user-attachments/assets/c1139dc4-7740-4997-8188-8d16cfb0f139" />
+
 ### Syntax Options
 
 #### 1. Inline Variations: `{option1|option2|option3}`
@@ -263,6 +268,8 @@ This complete transparency helps you:
 ---
 
 ## 📦 Batch Generation
+
+<img width="915" height="750" alt="image" src="https://github.com/user-attachments/assets/f1de999f-52bc-4318-bfe0-9ec41cd1860f" />
 
 ### Understanding the Queue System
 
