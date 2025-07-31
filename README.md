@@ -14,17 +14,32 @@ Think of it as your pixel art factory with X-ray vision - you design the bluepri
 
 ## 📚 Table of Contents
 
-1. [Core Concepts](#core-concepts)
-2. [What's New](#whats-new)
-3. [Getting Started](#getting-started)
-4. [The Wildcard System](#the-wildcard-system)
-5. [Dynamic Prompting](#dynamic-prompting)
-6. [Batch Generation](#batch-generation)
-7. [Advanced Features](#advanced-features)
-8. [Tips & Tricks](#tips-tricks)
-9. [Troubleshooting](#troubleshooting)
+1. [How To Run](#how-to-run)
+2. [Core Concepts](#core-concepts)
+3. [What's New](#whats-new)
+4. [Getting Started](#getting-started)
+5. [The Wildcard System](#the-wildcard-system)
+6. [Dynamic Prompting](#dynamic-prompting)
+7. [Batch Generation](#batch-generation)
+8. [Advanced Features](#advanced-features)
+9. [Tips & Tricks](#tips-tricks)
+10. [Troubleshooting](#troubleshooting)
 
 ---
+## How To Run
+```
+git clone https://github.com/Kquant03/pixflux-batch-generation
+
+cd into /backend
+
+npm install
+npm run dev
+
+
+cd into /src
+npm install
+npm run dev
+```
 
 ## 🧠 Core Concepts
 
