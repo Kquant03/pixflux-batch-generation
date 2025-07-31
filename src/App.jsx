@@ -327,6 +327,7 @@ export default function PixelLabImageGenerator() {
   const [successMessage, setSuccessMessage] = useState('');
   const [generatedImages, setGeneratedImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [serverConnected, setServerConnected] = useState(false);
   const [expandedSections, setExpandedSections] = useState({
     basic: true,
     style: true,
@@ -376,7 +377,9 @@ export default function PixelLabImageGenerator() {
   const outlineOptions = [
     'single color black outline',
     'selective outline',
-    'lineless'
+    'lineless',
+    'thick outline',
+    'colored outline'
   ];
 
   const shadingOptions = [
@@ -420,156 +423,142 @@ export default function PixelLabImageGenerator() {
 
   const [selectedCategory, setSelectedCategory] = useState('Square (Icons/Items)');
 
-  // Default wildcard templates (for initial setup)
-  const defaultWildcards = {
-    'artists': `by Zdislaw Beksinski
-by Vincent Van Gogh
-by Michelangelo
-by Leonardo da Vinci
-by Pablo Picasso
-by Claude Monet
-by Salvador Dali
-by Andy Warhol
-by Banksy
-by Yayoi Kusama
-by Frida Kahlo
-by Gustav Klimt
-by Edvard Munch
-by Jackson Pollock
-by Georgia O'Keeffe
-by Jean-Michel Basquiat
-by Keith Haring
-by David Hockney
-by Katsushika Hokusai
-by Takashi Murakami`,
+  // API configuration
+  const API_URL = 'http://localhost:3001/api';
+  
+  // Wildcard API functions
+  const wildcardAPI = {
+    async getAll() {
+      try {
+        const response = await fetch(`${API_URL}/wildcards`);
+        if (!response.ok) throw new Error('Failed to fetch wildcards');
+        const data = await response.json();
+        return data.wildcards;
+      } catch (error) {
+        console.error('Error fetching wildcards:', error);
+        throw error;
+      }
+    },
     
-    'styles': `anime style
-surrealist style
-expressionist style
-impressionist style
-cubist style
-art deco style
-art nouveau style
-baroque style
-minimalist style
-maximalist style
-gothic style
-romantic style
-realistic style
-abstract style
-pop art style
-street art style
-digital art style
-watercolor style
-oil painting style
-pencil sketch style`,
+    async getActive() {
+      try {
+        const response = await fetch(`${API_URL}/wildcards/active`);
+        if (!response.ok) throw new Error('Failed to fetch active wildcards');
+        const data = await response.json();
+        return data.active;
+      } catch (error) {
+        console.error('Error fetching active wildcards:', error);
+        throw error;
+      }
+    },
     
-    'moods': `cheerful
-melancholic
-mysterious
-energetic
-peaceful
-dramatic
-whimsical
-tense
-romantic
-nostalgic
-ethereal
-dark
-bright
-serene
-chaotic
-dreamy
-aggressive
-tranquil
-euphoric
-contemplative`,
+    async updateActive(active) {
+      try {
+        const response = await fetch(`${API_URL}/wildcards/active`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ active })
+        });
+        if (!response.ok) throw new Error('Failed to update active wildcards');
+        return await response.json();
+      } catch (error) {
+        console.error('Error updating active wildcards:', error);
+        throw error;
+      }
+    },
     
-    'lighting': `soft lighting
-dramatic lighting
-rim lighting
-backlit
-golden hour
-blue hour
-neon lights
-candlelight
-moonlight
-sunlight
-studio lighting
-natural lighting
-harsh shadows
-diffused light
-volumetric lighting
-bioluminescent
-glowing
-radiant
-dim lighting
-bright lighting`,
+    async save(name, content) {
+      try {
+        const response = await fetch(`${API_URL}/wildcards/${name}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content })
+        });
+        if (!response.ok) throw new Error('Failed to save wildcard');
+        return await response.json();
+      } catch (error) {
+        console.error('Error saving wildcard:', error);
+        throw error;
+      }
+    },
     
-    'colors': `vibrant colors
-muted colors
-pastel colors
-neon colors
-monochrome
-sepia tones
-warm colors
-cool colors
-complementary colors
-analogous colors
-triadic colors
-earth tones
-jewel tones
-metallic colors
-rainbow colors
-gradient colors
-duo-tone
-psychedelic colors
-natural colors
-artificial colors`,
+    async delete(name) {
+      try {
+        const response = await fetch(`${API_URL}/wildcards/${name}`, {
+          method: 'DELETE'
+        });
+        if (!response.ok) throw new Error('Failed to delete wildcard');
+        return await response.json();
+      } catch (error) {
+        console.error('Error deleting wildcard:', error);
+        throw error;
+      }
+    },
     
-    'quality': `masterpiece
-high quality
-ultra detailed
-professional
-award winning
-stunning
-beautiful
-intricate
-elaborate
-refined
-polished
-crisp
-sharp
-clean
-pristine
-flawless
-perfect
-exceptional
-outstanding
-remarkable`
+    async rename(oldName, newName) {
+      try {
+        const response = await fetch(`${API_URL}/wildcards/${oldName}/rename`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ newName })
+        });
+        if (!response.ok) throw new Error('Failed to rename wildcard');
+        return await response.json();
+      } catch (error) {
+        console.error('Error renaming wildcard:', error);
+        throw error;
+      }
+    }
   };
 
+  // Load wildcards from API on mount
   useEffect(() => {
-    // Initialize with default wildcards
-    const savedWildcards = localStorage.getItem('pixellab-wildcards');
-    if (savedWildcards) {
-      const parsed = JSON.parse(savedWildcards);
-      setWildcardFiles(parsed);
-    } else {
-      setWildcardFiles(defaultWildcards);
-      localStorage.setItem('pixellab-wildcards', JSON.stringify(defaultWildcards));
+    async function loadWildcards() {
+      try {
+        // Check if API is available
+        const healthCheck = await fetch(`${API_URL}/health`).catch(() => null);
+        
+        if (healthCheck && healthCheck.ok) {
+          // API is available, use it
+          setServerConnected(true);
+          const [wildcards, active] = await Promise.all([
+            wildcardAPI.getAll(),
+            wildcardAPI.getActive()
+          ]);
+          
+          setWildcardFiles(wildcards);
+          setActiveWildcards(active);
+          setSuccessMessage('Wildcards loaded from server');
+        } else {
+          // API not available, check localStorage for migration
+          setServerConnected(false);
+          const savedWildcards = localStorage.getItem('pixellab-wildcards');
+          const savedActive = localStorage.getItem('pixellab-active-wildcards');
+          
+          if (savedWildcards) {
+            const parsed = JSON.parse(savedWildcards);
+            setWildcardFiles(parsed);
+            
+            if (savedActive) {
+              setActiveWildcards(JSON.parse(savedActive));
+            }
+            
+            setError('Wildcard server not available. Using local storage. Start the server with: node server.js');
+          } else {
+            // No wildcards anywhere, start fresh
+            setWildcardFiles({});
+            setActiveWildcards([]);
+            setError('No wildcards found. Start the server to create defaults: node server.js');
+          }
+        }
+      } catch (error) {
+        console.error('Error loading wildcards:', error);
+        setServerConnected(false);
+        setError('Failed to load wildcards. Make sure the server is running on port 3001');
+      }
     }
     
-    // Load active wildcards
-    const savedActive = localStorage.getItem('pixellab-active-wildcards');
-    if (savedActive) {
-      const parsedActive = JSON.parse(savedActive);
-      setActiveWildcards(parsedActive);
-    } else {
-      const defaultActive = Object.keys(defaultWildcards);
-      setActiveWildcards(defaultActive);
-      localStorage.setItem('pixellab-active-wildcards', JSON.stringify(defaultActive));
-    }
+    loadWildcards();
   }, []);
 
   // Update refs when state changes
@@ -656,14 +645,21 @@ remarkable`
     }));
   };
 
-  // Wildcard management
-  const toggleWildcard = (name) => {
+  // Wildcard management - Now using API
+  const toggleWildcard = async (name) => {
     const newActive = activeWildcards.includes(name)
       ? activeWildcards.filter(w => w !== name)
       : [...activeWildcards, name];
     
     setActiveWildcards(newActive);
-    localStorage.setItem('pixellab-active-wildcards', JSON.stringify(newActive));
+    
+    // Update on server
+    try {
+      await wildcardAPI.updateActive(newActive);
+    } catch (error) {
+      console.error('Failed to update active wildcards on server:', error);
+      // Still update locally even if server fails
+    }
   };
 
   // Function to add __wildcard__ to prompt
@@ -687,7 +683,7 @@ remarkable`
     setSuccessMessage(`Added __${wildcardName}__ placeholder to prompt`);
   };
 
-  const saveWildcard = () => {
+  const saveWildcard = async () => {
     if (!newWildcardName.trim() || !newWildcardContent.trim()) {
       setError('Please provide both a name and content for the wildcard');
       return;
@@ -695,60 +691,79 @@ remarkable`
 
     const wildcardKey = newWildcardName.toLowerCase().replace(/\s+/g, '_');
     
-    // If editing and the name changed, we need to handle the key change
-    if (editingWildcard && editingWildcard !== wildcardKey) {
-      // Remove the old wildcard
-      const updatedWildcards = { ...wildcardFiles };
-      delete updatedWildcards[editingWildcard];
-      updatedWildcards[wildcardKey] = newWildcardContent.trim();
-      
-      setWildcardFiles(updatedWildcards);
-      localStorage.setItem('pixellab-wildcards', JSON.stringify(updatedWildcards));
-      
-      // Update active wildcards if the old one was active
-      if (activeWildcards.includes(editingWildcard)) {
-        const newActive = activeWildcards.filter(w => w !== editingWildcard);
-        newActive.push(wildcardKey);
-        setActiveWildcards(newActive);
-        localStorage.setItem('pixellab-active-wildcards', JSON.stringify(newActive));
+    try {
+      // If editing and the name changed, we need to handle the rename
+      if (editingWildcard && editingWildcard !== wildcardKey) {
+        // First get the current content
+        const currentContent = wildcardFiles[editingWildcard];
+        
+        // Save the new wildcard
+        await wildcardAPI.save(wildcardKey, newWildcardContent.trim());
+        
+        // Delete the old one
+        await wildcardAPI.delete(editingWildcard);
+        
+        // Update local state
+        const updatedWildcards = { ...wildcardFiles };
+        delete updatedWildcards[editingWildcard];
+        updatedWildcards[wildcardKey] = newWildcardContent.trim();
+        setWildcardFiles(updatedWildcards);
+        
+        // Update active wildcards if the old one was active
+        if (activeWildcards.includes(editingWildcard)) {
+          const newActive = activeWildcards.filter(w => w !== editingWildcard);
+          newActive.push(wildcardKey);
+          setActiveWildcards(newActive);
+          await wildcardAPI.updateActive(newActive);
+        }
+      } else {
+        // Normal save or update
+        await wildcardAPI.save(wildcardKey, newWildcardContent.trim());
+        
+        const updatedWildcards = {
+          ...wildcardFiles,
+          [wildcardKey]: newWildcardContent.trim()
+        };
+        setWildcardFiles(updatedWildcards);
+        
+        // Auto-activate new wildcard
+        if (!activeWildcards.includes(wildcardKey)) {
+          const newActive = [...activeWildcards, wildcardKey];
+          setActiveWildcards(newActive);
+          await wildcardAPI.updateActive(newActive);
+        }
       }
-    } else {
-      // Normal save or update
-      const updatedWildcards = {
-        ...wildcardFiles,
-        [wildcardKey]: newWildcardContent.trim()
-      };
       
-      setWildcardFiles(updatedWildcards);
-      localStorage.setItem('pixellab-wildcards', JSON.stringify(updatedWildcards));
-      
-      // Auto-activate new wildcard
-      if (!activeWildcards.includes(wildcardKey)) {
-        const newActive = [...activeWildcards, wildcardKey];
-        setActiveWildcards(newActive);
-        localStorage.setItem('pixellab-active-wildcards', JSON.stringify(newActive));
-      }
+      setNewWildcardName('');
+      setNewWildcardContent('');
+      setShowWildcardEditor(false);
+      setEditingWildcard(null);
+      setSuccessMessage('Wildcard saved successfully!');
+    } catch (error) {
+      setError('Failed to save wildcard: ' + error.message);
     }
-    
-    setNewWildcardName('');
-    setNewWildcardContent('');
-    setShowWildcardEditor(false);
-    setEditingWildcard(null);
-    setSuccessMessage('Wildcard saved successfully!');
   };
 
-  const deleteWildcard = (name) => {
+  const deleteWildcard = async (name) => {
     if (confirm(`Delete wildcard "${name}"?`)) {
-      const updatedWildcards = { ...wildcardFiles };
-      delete updatedWildcards[name];
-      
-      setWildcardFiles(updatedWildcards);
-      localStorage.setItem('pixellab-wildcards', JSON.stringify(updatedWildcards));
-      
-      // Remove from active if it was active
-      const newActive = activeWildcards.filter(w => w !== name);
-      setActiveWildcards(newActive);
-      localStorage.setItem('pixellab-active-wildcards', JSON.stringify(newActive));
+      try {
+        await wildcardAPI.delete(name);
+        
+        const updatedWildcards = { ...wildcardFiles };
+        delete updatedWildcards[name];
+        setWildcardFiles(updatedWildcards);
+        
+        // Remove from active if it was active
+        if (activeWildcards.includes(name)) {
+          const newActive = activeWildcards.filter(w => w !== name);
+          setActiveWildcards(newActive);
+          await wildcardAPI.updateActive(newActive);
+        }
+        
+        setSuccessMessage('Wildcard deleted successfully!');
+      } catch (error) {
+        setError('Failed to delete wildcard: ' + error.message);
+      }
     }
   };
 
@@ -1376,7 +1391,7 @@ remarkable`
           />
           <p className="text-xs text-gray-500 mt-2">
             Get your API secret from{' '}
-            <a href="https://www.pixellab.ai" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:underline">
+            <a href="https://www.pixellab.ai/pixellab-api" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:underline">
               pixellab.ai
             </a>
           </p>
@@ -1656,7 +1671,22 @@ remarkable`
                 <div className="p-6 pt-4 space-y-4">
                   <div className="space-y-3 mb-4">
                     <div className="flex justify-between items-center">
-                      <p className="text-sm text-gray-400">Active wildcards auto-append • Click names to add __wildcard__</p>
+                      <div>
+                        <p className="text-sm text-gray-400">Active wildcards auto-append • Click names to add __wildcard__</p>
+                        <p className="text-xs mt-1">
+                          {serverConnected ? (
+                            <span className="text-green-400 flex items-center gap-1">
+                              <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                              Server connected - Wildcards saved as files
+                            </span>
+                          ) : (
+                            <span className="text-yellow-400 flex items-center gap-1">
+                              <span className="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                              Using local storage - Start server for file storage
+                            </span>
+                          )}
+                        </p>
+                      </div>
                       <button
                         onClick={() => {
                           setShowWildcardEditor(true);
@@ -1674,10 +1704,14 @@ remarkable`
                     <div className="flex gap-2 text-xs">
                       <span className="text-gray-600">•</span>
                       <button
-                        onClick={() => {
+                        onClick={async () => {
                           const allKeys = Object.keys(wildcardFiles);
                           setActiveWildcards(allKeys);
-                          localStorage.setItem('pixellab-active-wildcards', JSON.stringify(allKeys));
+                          try {
+                            await wildcardAPI.updateActive(allKeys);
+                          } catch (error) {
+                            console.error('Failed to update active wildcards:', error);
+                          }
                           setSuccessMessage(`Enabled all ${allKeys.length} wildcards`);
                         }}
                         className="text-purple-400 hover:text-purple-300"
@@ -1686,9 +1720,13 @@ remarkable`
                       </button>
                       <span className="text-gray-600">•</span>
                       <button
-                        onClick={() => {
+                        onClick={async () => {
                           setActiveWildcards([]);
-                          localStorage.setItem('pixellab-active-wildcards', JSON.stringify([]));
+                          try {
+                            await wildcardAPI.updateActive([]);
+                          } catch (error) {
+                            console.error('Failed to update active wildcards:', error);
+                          }
                           setSuccessMessage('Disabled all wildcards');
                         }}
                         className="text-purple-400 hover:text-purple-300"
@@ -1701,18 +1739,26 @@ remarkable`
                       </span>
                       <span className="text-gray-600">•</span>
                       <button
-                        onClick={() => {
-                          if (confirm('Reset all wildcards to defaults? This will delete custom wildcards.')) {
-                            setWildcardFiles(defaultWildcards);
-                            setActiveWildcards(Object.keys(defaultWildcards));
-                            localStorage.setItem('pixellab-wildcards', JSON.stringify(defaultWildcards));
-                            localStorage.setItem('pixellab-active-wildcards', JSON.stringify(Object.keys(defaultWildcards)));
-                            setSuccessMessage('Wildcards reset to defaults');
+                        onClick={async () => {
+                          try {
+                            // Reload wildcards from server
+                            const [wildcards, active] = await Promise.all([
+                              wildcardAPI.getAll(),
+                              wildcardAPI.getActive()
+                            ]);
+                            
+                            setWildcardFiles(wildcards);
+                            setActiveWildcards(active);
+                            setServerConnected(true);
+                            setSuccessMessage('Wildcards reloaded from server');
+                          } catch (error) {
+                            setServerConnected(false);
+                            setError('Failed to reload wildcards: ' + error.message);
                           }
                         }}
-                        className="text-red-400 hover:text-red-300"
+                        className="text-green-400 hover:text-green-300"
                       >
-                        Reset to Defaults
+                        Reload from Server
                       </button>
                     </div>
                   </div>

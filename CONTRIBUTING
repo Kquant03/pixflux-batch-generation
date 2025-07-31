@@ -1,0 +1,393 @@
+# 🤝 Contributing to Pixflux Batch Generation
+
+First off, **thank you** for considering contributing to this project! This tool was built with love for the pixel art community, and we're excited to see it grow with your help.
+
+## 📋 Table of Contents
+
+- [Ways to Contribute](#ways-to-contribute)
+- [Getting Started](#getting-started)
+- [Development Setup](#development-setup)
+- [Code Guidelines](#code-guidelines)
+- [Submitting Changes](#submitting-changes)
+- [Wildcard Contributions](#wildcard-contributions)
+- [Bug Reports](#bug-reports)
+- [Feature Requests](#feature-requests)
+- [Community](#community)
+
+## 🎯 Ways to Contribute
+
+### For Everyone
+- **Share wildcard collections** - Create and share themed wildcards
+- **Report bugs** - If something's not working, let us know!
+- **Suggest features** - Have an idea? We'd love to hear it
+- **Improve documentation** - Help others understand the tool better
+- **Share your creations** - Show us what you made!
+
+### For Developers
+- **Fix bugs** - Pick an issue and dive in
+- **Add features** - Implement requested functionality
+- **Improve performance** - Make it faster
+- **Enhance UI/UX** - Make it prettier
+- **Write tests** - Help ensure reliability
+
+### For Artists
+- **Create default wildcards** - Curate better option lists
+- **Design UI improvements** - Suggest visual enhancements
+- **Test edge cases** - Try unusual combinations
+- **Write creative guides** - Share techniques
+
+## 🚀 Getting Started
+
+### 1. Fork the Repository
+
+Click the "Fork" button at the top right of this page.
+
+### 2. Clone Your Fork
+
+```bash
+git clone https://github.com/YOUR-USERNAME/pixellab-batch-generator.git
+cd pixflux-batch-generation
+```
+
+### 3. Add Upstream Remote
+
+```bash
+git remote add upstream https://github.com/ORIGINAL-OWNER/pixellab-batch-generator.git
+```
+
+### 4. Create a Branch
+
+```bash
+git checkout -b feature/amazing-new-feature
+# or
+git checkout -b fix/annoying-bug
+```
+
+## 💻 Development Setup
+
+### Prerequisites
+- Node.js 16+
+- npm or yarn
+- Git
+
+### Installation
+
+```bash
+# Install frontend dependencies
+npm install
+
+# Install backend dependencies
+cd backend
+npm install
+cd ..
+```
+
+### Running Development
+
+```bash
+# Terminal 1: Start backend
+cd backend
+npm run dev
+
+# Terminal 2: Start frontend
+npm run dev
+```
+
+### Project Structure
+
+```
+├── src/
+│   ├── App.jsx         # Main React component
+│   ├── main.jsx        # Entry point
+│   └── index.css       # Global styles
+├── backend/
+│   ├── server.js       # Express server
+│   └── wildcards/      # Wildcard storage
+├── docs/               # Documentation
+└── public/             # Static assets
+```
+
+## 📝 Code Guidelines
+
+### General Principles
+
+1. **Clarity over cleverness** - Code should be easy to understand
+2. **Comments for why, not what** - Explain the reasoning
+3. **Consistent style** - Follow existing patterns
+4. **Test your changes** - Make sure everything still works
+
+### JavaScript Style
+
+```javascript
+// Good: Clear naming
+const processWildcard = (wildcardName) => {
+  // Explain complex logic
+  const options = wildcardFiles[wildcardName].split('\n');
+  return options[Math.floor(Math.random() * options.length)];
+};
+
+// Bad: Unclear naming
+const pw = (w) => {
+  const o = wf[w].split('\n');
+  return o[Math.floor(Math.random() * o.length)];
+};
+```
+
+### React Components
+
+```javascript
+// Use functional components with hooks
+const MyComponent = () => {
+  const [state, setState] = useState(initialValue);
+  
+  // Group related state
+  const [formData, setFormData] = useState({
+    field1: '',
+    field2: ''
+  });
+  
+  return <div>...</div>;
+};
+```
+
+### CSS/Tailwind
+
+```javascript
+// Use Tailwind utilities
+className="bg-gray-800 rounded-lg p-4"
+
+// Custom CSS only when necessary
+style={{ imageRendering: 'pixelated' }}
+```
+
+## 🔄 Submitting Changes
+
+### 1. Commit Your Changes
+
+```bash
+git add .
+git commit -m "Add: Exciting new feature that does X"
+```
+
+#### Commit Message Format
+
+```
+Type: Brief description
+
+Longer explanation if needed.
+
+Fixes #123
+```
+
+Types: `Add`, `Fix`, `Update`, `Remove`, `Refactor`, `Docs`
+
+### 2. Push to Your Fork
+
+```bash
+git push origin feature/amazing-new-feature
+```
+
+### 3. Create Pull Request
+
+1. Go to your fork on GitHub
+2. Click "Pull request"
+3. Fill out the template
+4. Submit!
+
+### Pull Request Template
+
+```markdown
+## Description
+Brief description of changes
+
+## Type of Change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Documentation update
+- [ ] Performance improvement
+
+## Testing
+- [ ] Tested locally
+- [ ] Tested with different prompts
+- [ ] Tested batch generation
+
+## Screenshots (if applicable)
+```
+
+## 🎲 Wildcard Contributions
+
+We love new wildcard collections! Here's how to contribute them:
+
+### 1. Create Your Wildcard File
+
+```
+backend/wildcards/your_theme.txt
+```
+
+### 2. Follow the Format
+
+```
+option one
+option two
+option three
+```
+
+### 3. Guidelines
+
+- **One option per line**
+- **No empty lines**
+- **Test each option works**
+- **Theme should be coherent**
+- **15-30 options is ideal**
+
+### 4. Submit with Examples
+
+Show us how your wildcard works:
+```
+Wildcard: fantasy_weapons
+Example results: "enchanted staff", "dragon bone sword"
+Use case: RPG item generation
+```
+
+## 🐛 Bug Reports
+
+### Before Reporting
+
+1. Check existing issues
+2. Try latest version
+3. Clear browser cache
+4. Test in different browser
+
+### Bug Report Template
+
+```markdown
+**Describe the bug**
+Clear description of what went wrong
+
+**To Reproduce**
+1. Go to '...'
+2. Click on '....'
+3. See error
+
+**Expected behavior**
+What should have happened
+
+**Screenshots**
+If applicable
+
+**Environment:**
+- Browser: [e.g. Chrome 91]
+- OS: [e.g. Windows 10]
+- Node version: [e.g. 16.13.0]
+```
+
+## 💡 Feature Requests
+
+### Before Requesting
+
+1. Check it doesn't exist
+2. Check planned features in README
+3. Consider if it fits the project vision
+
+### Feature Request Template
+
+```markdown
+**Is your feature request related to a problem?**
+Clear description of the problem
+
+**Describe the solution**
+How you envision it working
+
+**Alternatives considered**
+Other ways to solve this
+
+**Additional context**
+Mockups, examples, etc.
+```
+
+## 🧪 Testing
+
+### Manual Testing Checklist
+
+Before submitting a PR, test:
+
+- [ ] Generate single image
+- [ ] Generate batch of 10
+- [ ] Create new wildcard
+- [ ] Edit existing wildcard
+- [ ] Download image with metadata
+- [ ] Upload image to metadata reader
+- [ ] Test with no wildcards active
+- [ ] Test with all wildcards active
+
+### Future: Automated Tests
+
+We're planning to add:
+- Jest for unit tests
+- React Testing Library
+- E2E tests with Playwright
+
+## 🎨 UI/UX Contributions
+
+### Design Principles
+
+1. **Dark theme first** - Easy on the eyes
+2. **Clear visual hierarchy** - Important things stand out
+3. **Responsive design** - Works on all screens
+4. **Accessible** - Usable by everyone
+
+### Suggesting UI Changes
+
+1. Create a mockup or sketch
+2. Explain the problem it solves
+3. Consider edge cases
+4. Think about mobile users
+
+## 📚 Documentation
+
+### What Makes Good Docs
+
+- **Clear examples**
+- **Step-by-step instructions**
+- **Screenshots where helpful**
+- **Common problems and solutions**
+
+### Documentation Structure
+
+```
+docs/
+├── README.md           # Overview
+├── getting-started.md  # First steps
+├── guides/             # How-to guides
+└── reference/          # Technical details
+```
+
+## 🌟 Recognition
+
+Contributors will be:
+- Added to CONTRIBUTORS.md
+- Mentioned in release notes
+- Celebrated in the community!
+
+## 🤔 Questions?
+
+- Open an issue with the "question" label
+- Join our discussions
+- Reach out to maintainers
+
+## 🎯 Quick Wins for First-Time Contributors
+
+Look for issues labeled:
+- `good first issue`
+- `help wanted`
+- `documentation`
+
+## 💜 Code of Conduct
+
+Be kind, be helpful, be creative. We're all here to make something cool together.
+
+---
+
+**Remember**: Every contribution, no matter how small, makes this tool better for everyone. Whether it's fixing a typo, adding a wildcard, or implementing a major feature - you're helping the pixel art community create amazing things!
+
+Thank you for contributing! 🎨✨
