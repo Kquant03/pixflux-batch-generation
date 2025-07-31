@@ -39,6 +39,7 @@ cd into /src
 npm install
 npm run dev
 ```
+Then you can just ctrl+click the link to open the site! Enjoy!
 
 ## 🧠 Core Concepts
 
