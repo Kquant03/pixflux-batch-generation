@@ -1,6 +1,6 @@
 # 🎨 Pixflux Batch Generation
 
-<img width="2560" height="1440" alt="Saber" src="https://github.com/user-attachments/assets/8239c3e1-54b8-488f-be21-611a014d15ef" />
+<kbd><img width="2560" height="1440" alt="Saber" src="https://github.com/user-attachments/assets/8239c3e1-54b8-488f-be21-611a014d15ef" /></kbd>
 
 **Generate hundreds of unique pixel art variations with complete transparency about what was created**
 
@@ -37,8 +37,8 @@ npm run dev
 
 <table>
 <tr>
-<td><img width="884" height="446" alt="Wildcard System" src="https://github.com/user-attachments/assets/3261e311-f732-46ee-8235-f269bd6f032f" /></td>
-<td><img width="672" height="588" alt="Wildcard Editor" src="https://github.com/user-attachments/assets/44386b6a-ed2b-4fd5-a16c-9f611c2a830b" /></td>
+<td><kbd><img width="884" height="446" alt="Wildcard System" src="https://github.com/user-attachments/assets/3261e311-f732-46ee-8235-f269bd6f032f" /></kbd></td>
+<td><kbd><img width="672" height="588" alt="Wildcard Editor" src="https://github.com/user-attachments/assets/44386b6a-ed2b-4fd5-a16c-9f611c2a830b" /></kbd></td>
 </tr>
 </table>
 
@@ -56,7 +56,7 @@ What happens: "a mysterious dragon with neon colors"
 
 ### 🔀 **Variation Syntax That Multiplies Your Creativity**
 
-<img width="879" height="358" alt="Dynamic Prompting" src="https://github.com/user-attachments/assets/c1139dc4-7740-4997-8188-8d16cfb0f139" />
+<kbd><img width="879" height="358" alt="Dynamic Prompting" src="https://github.com/user-attachments/assets/c1139dc4-7740-4997-8188-8d16cfb0f139" /></kbd>
 
 One prompt, infinite possibilities:
 
@@ -68,7 +68,7 @@ This generates **9 unique combinations** from a single line. Combine with wildca
 
 ### 📦 **Batch Queue That Respects Your Time (and API Limits)**
 
-<img width="915" height="750" alt="Batch Queue System" src="https://github.com/user-attachments/assets/f1de999f-52bc-4318-bfe0-9ec41cd1860f" />
+<kbd><img width="915" height="750" alt="Batch Queue System" src="https://github.com/user-attachments/assets/f1de999f-52bc-4318-bfe0-9ec41cd1860f" /></kbd>
 
 Generate 1 to 100 images with:
 - **Visual progress tracking** - See exactly what's happening
@@ -78,7 +78,7 @@ Generate 1 to 100 images with:
 
 ### 🏷️ **Metadata System That Preserves Everything**
 
-<img width="870" height="920" alt="Metadata System" src="https://github.com/user-attachments/assets/f5ad77ee-d6ef-4cd7-91fe-43c53bf30a1e" />
+<kbd><img width="870" height="920" alt="Metadata System" src="https://github.com/user-attachments/assets/f5ad77ee-d6ef-4cd7-91fe-43c53bf30a1e" /></kbd>
 
 Every PNG contains its complete generation history:
 - Original prompt template
