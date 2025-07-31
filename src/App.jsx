@@ -134,7 +134,7 @@ const createPNGWithMetadata = (base64Data, metadata) => {
     addTextChunk('PixelLab-Seed', String(metadata.seed || ''));
     addTextChunk('PixelLab-Timestamp', metadata.timestamp || new Date().toISOString());
     addTextChunk('PixelLab-Settings', JSON.stringify(metadata.settings || {}));
-    addTextChunk('PixelLab-Generator', 'PixelLab AI Batch Generator v2.0');
+    addTextChunk('PixelLab-Generator', 'Pixflux Batch Generation v2.0');
     
     console.log(`Created ${chunks.length} metadata chunks`);
     
