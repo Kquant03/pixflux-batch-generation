@@ -1,4 +1,4 @@
-# 🎨 PixelLab AI Batch Generator
+# 🎨 Pixflux Batch Generation
 
 <img width="2560" height="1440" alt="Saber" src="https://github.com/user-attachments/assets/8239c3e1-54b8-488f-be21-611a014d15ef" />
 
@@ -35,6 +35,9 @@ npm run dev
 
 ### 🎲 **Dynamic Wildcard System That Actually Makes Sense**
 
+<img width="884" height="446" alt="image" src="https://github.com/user-attachments/assets/3261e311-f732-46ee-8235-f269bd6f032f" />
+<img width="672" height="588" alt="image" src="https://github.com/user-attachments/assets/44386b6a-ed2b-4fd5-a16c-9f611c2a830b" />
+
 Forget copy-pasting prompts. Create **reusable collections** that work like magic:
 
 ```
@@ -70,6 +73,8 @@ Generate 1 to 100 images with:
 - **Individual failure handling** - One fail doesn't stop the show
 
 ### 🏷️ **Metadata System That Preserves Everything**
+
+<img width="870" height="920" alt="image" src="https://github.com/user-attachments/assets/f5ad77ee-d6ef-4cd7-91fe-43c53bf30a1e" />
 
 Every PNG contains its complete generation history:
 - Original prompt template
