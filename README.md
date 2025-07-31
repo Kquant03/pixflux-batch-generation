@@ -194,11 +194,10 @@ Traditional AI image generators are black boxes. You put in a prompt, you get an
 
 ## 🚀 Coming Soon
 
-- [ ] Prompt templates marketplace
-- [ ] Wildcard sharing hub
-- [ ] Generation analytics
-- [ ] Style learning from favorites
-- [ ] API support for other generators
+- [ ] More settings
+- [ ] Full dimensional capabilities of pixflux
+- [ ] Better UX for image viewer
+- [ ] More...? (not sure what else to do here...yet!)
 
 ## 💝 Built With Love
 
