@@ -35,8 +35,12 @@ npm run dev
 
 ### 🎲 **Dynamic Wildcard System That Actually Makes Sense**
 
-<img width="884" height="446" alt="image" src="https://github.com/user-attachments/assets/3261e311-f732-46ee-8235-f269bd6f032f" />
-<img width="672" height="588" alt="image" src="https://github.com/user-attachments/assets/44386b6a-ed2b-4fd5-a16c-9f611c2a830b" />
+<table>
+<tr>
+<td><img width="884" height="446" alt="Wildcard System" src="https://github.com/user-attachments/assets/3261e311-f732-46ee-8235-f269bd6f032f" /></td>
+<td><img width="672" height="588" alt="Wildcard Editor" src="https://github.com/user-attachments/assets/44386b6a-ed2b-4fd5-a16c-9f611c2a830b" /></td>
+</tr>
+</table>
 
 Forget copy-pasting prompts. Create **reusable collections** that work like magic:
 
@@ -74,7 +78,7 @@ Generate 1 to 100 images with:
 
 ### 🏷️ **Metadata System That Preserves Everything**
 
-<img width="870" height="920" alt="image" src="https://github.com/user-attachments/assets/f5ad77ee-d6ef-4cd7-91fe-43c53bf30a1e" />
+<img width="870" height="920" alt="Metadata System" src="https://github.com/user-attachments/assets/f5ad77ee-d6ef-4cd7-91fe-43c53bf30a1e" />
 
 Every PNG contains its complete generation history:
 - Original prompt template
