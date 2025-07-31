@@ -1,4 +1,4 @@
-# 🎨 PixelLab AI Batch Generator
+# 🎨 Pixflux Batch Generation
 
 <img width="2560" height="1440" alt="Saber" src="https://github.com/user-attachments/assets/8239c3e1-54b8-488f-be21-611a014d15ef" />
 
